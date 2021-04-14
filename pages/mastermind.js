@@ -9,7 +9,10 @@ import React, {
   } from 'next/router'
   
   import styles from './styles.module.css'
-  
+  import {Button } from "react-bootstrap";
+  import 'bootstrap/dist/css/bootstrap.css'
+
+
   
   const matermind = () => {
       const combination = 4;
@@ -110,7 +113,10 @@ import React, {
       }
 
     return (<div className={styles.game}>
-    <button className={styles.button} onClick={()=>{setNewGame(true)}}>Start the Game</button>
+    {/* <button className={styles.button} onClick={()=>{setNewGame(true)}}>Start the Game</button> */}
+    <Button variant="primary" type="submit" size="lg" className={styles.button}  onClick={()=>{setNewGame(true)}}>
+    Start the Game
+    </Button>
     <div className="help">
         {gusses} guesses left
       </div>

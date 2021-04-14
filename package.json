@@ -1,21 +1,27 @@
 {
   "name": "mastermind",
   "version": "1.0.0",
-  "description": "",
+  "description": "React Game",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Amershabou/Mastermind.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "next",
+    "dev": "next dev -p 4001",
     "build": "next build",
     "start": "next start"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Amer Shabou",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.21.1",
+    "bootstrap": "^5.0.0-beta3",
     "next": "^10.1.3",
     "react": "^17.0.2",
+    "react-bootstrap": "^1.5.2",
     "react-dom": "^17.0.2"
   }
 }
