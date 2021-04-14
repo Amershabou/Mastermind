@@ -1,55 +1,230 @@
+.container {
+  display: flex;
+  align-items: flex-start;
+  height: auto; 
+  margin: 50px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+}
+.text{
+  font-family: 'Gruppo';font-size: 18px;
+  padding: 3px;
+
+}
+.solved{
+ 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+}
+.firstView{
+  display: flex;
+  /* align-items: flex-start; */
+  height: auto; 
+  margin-top: 50px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.item{
+  /* padding: 5px 0px; */
+  /* align-items: stretch; */
+  /* justify-content: center;
+  align-items: center; */
+  /* justify-content: space-between; */
+
+
+
+}
+.startButton {
+  cursor: pointer;
+  /* margin: 50px; */
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  display: block;
+  /* flex: 1 */
+}
+.secondView{
+  display: flex;
+  /* align-items: flex-start; */
+  height: auto; 
+  margin-top: 50px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}​
 .game {
-  max-width: 500px;
+  /* max-width: 500px; */
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
+
 }
 
+.gameItem {
+  padding: 5px 0px;
+
+}
 .body {
   display: flex;
-}
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  align-items: flex-start;
 
-.help {
+}
+.numbersTable{
+  margin: 50px;
+}
+/* .help {
   color: #666;
   margin: 10px;
   text-align: center;
-}
+} */
 
-.left {
+/* .left {
   text-align: center;
   width: 50%;
   border: thin solid #ddd;
+} */
+
+
+
+.guessNumbers {
+ display: flex;
+ /* align-items: flex-start; */
 }
 
+
+
+.numbersTable{
+  display: flex;
+  align-items: flex-start;
+  height: auto; 
+  margin: 50px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .numbersBox {
   text-align: center;
-  padding: 10px;
-  width: 60%;
+  display: flex;
+  /* padding: 10px; */
+  width: 700px;
+  margin-top: 10px;
   border: thin solid #ddd;
 }
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
+}
+.number {
+  background-color: #eee;
+  border: thin solid #ddd;
+  width: 80px;
+  height: 80px;
+  margin: 7px;
+  font-size: 25px;
+  cursor: pointer;
+  flex: 1;
+
+}
+.number:active  {
+  border:  solid rgb(32, 29, 29);
+}
+.number:hover{
+  background-color: rgb(177, 174, 174);
+}
+.guessSubmit {
+  margin: 20px;
+  cursor: pointer;
+}
+
+
+
+
+
+.newStartButton{
+  cursor: pointer;
+  /* margin: 50px; */
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto;
+  /* display: block; */
+}
+
+.guessBox {
+  /* text-align: center; */
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-start; */
+  /* padding: 5px; */
+  justify-content: center;
+  align-items: center;
+  width: 700px;
+  /* border: thin solid #ddd; */
+}
+.insideBox{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 350px;
+}
+.message{
+  width: 350px;
+  padding: 5px;
+  font-family: 'Gruppo';font-size: 18px;
+}
+.guessRow {
+  /* border: .5px solid #000; */
+  margin: 3px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
 .star {
 	display: inline-block;
   margin: 0 15px;
 }
 
-.star:after {
+/* .star:after {
   content: "\2605";
   font-size: 45px;
-}
+} */
 
-.number {
+/* .number {
   background-color: #eee;
   border: thin solid #ddd;
-  width: 45px;
-  height: 45px;
-  margin: 10px;
+  width: 70px;
+  height: 70px;
+  margin: 7px;
   font-size: 25px;
-}
+  cursor: pointer;
+  flex: 1;
 
-.number:focus, .number:active {
-  outline: none;
+
+} */
+.square {
+  background-color: #eee;
   border: thin solid #ddd;
+  width: 40px;
+  height: 40px;
+  margin: 2px;
+  font-size: 25px;
+  cursor: none;
+  flex: 1;
 }
 
 .timer {
@@ -58,15 +233,9 @@
   margin-left: 3px;
 }
 
-.game-done .message {
+/* .game-done .message {
   font-size: 250%;
   font-weight: bold;
   margin: 15px;
-}
+} */
 
-.button {
-  cursor: pointer;
-}
-.guessSubmit {
-  cursor: pointer;
-}
