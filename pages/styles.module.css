@@ -12,14 +12,11 @@
 .text{
   padding: 1px;
   font-family: 'Gruppo';font-size: 20px;
-  /* height: 60px; */
-  /* width: 35px; */
   text-align: center;
  } 
 
 
 .solved{
- 
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -27,7 +24,6 @@
 }
 .firstView{
   display: flex;
-  /* align-items: flex-start; */
   height: auto; 
   margin-top: 50px;
   flex-direction: column;
@@ -79,26 +75,6 @@
 .numbersTable{
   margin: 50px;
 }
-/* .help {
-  color: #666;
-  margin: 10px;
-  text-align: center;
-} */
-
-/* .left {
-  text-align: center;
-  width: 50%;
-  border: thin solid #ddd;
-} */
-
-
-
-.guessNumbers {
- display: flex;
- /* align-items: flex-start; */
-}
-
-
 
 .numbersTable{
   display: flex;
@@ -141,7 +117,7 @@
   background-color: rgb(177, 174, 174);
 }
 .guessSubmit {
-  margin: 20px;
+  margin: 5px;
   cursor: pointer;
 }
 
@@ -186,35 +162,15 @@
 
 }
 .guessRow {
-  /* border: .5px solid #000; */
-  margin: 1px;
+  margin: .5px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-.star {
-	display: inline-block;
-  margin: 0 15px;
-}
 
-/* .star:after {
-  content: "\2605";
-  font-size: 45px;
-} */
-
-/* .number {
-  background-color: #eee;
-  border: thin solid #ddd;
-  width: 70px;
-  height: 70px;
-  margin: 7px;
-  font-size: 25px;
-  cursor: pointer;
-  flex: 1;
-} */
 .square {
-  background-color: #9bbadd;
+  background-color: #acc5e2;
   border: thin solid #97b7dd;
   width: 80px;
   height: 70px;
@@ -224,14 +180,9 @@
   flex: 2;
 }
 
-.timer {
+/* .timer {
 	color: #666;
   margin-top: 3px;
   margin-left: 3px;
-}
-
-/* .game-done .message {
-  font-size: 250%;
-  font-weight: bold;
-  margin: 15px;
 } */
+
