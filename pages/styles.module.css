@@ -15,7 +15,6 @@
   text-align: center;
  } 
 
-
 .solved{
   flex-direction: column;
   justify-content: center;
@@ -101,7 +100,7 @@
 
 }
 .number {
-  background-color: #eee;
+  background-color: #eeeeee;
   border: thin solid #ddd;
   width: 80px;
   height: 70px;
@@ -111,19 +110,16 @@
 
 }
 .number:active  {
-  border:  solid rgb(32, 29, 29);
+  background-color: #8a8787;
+  border:  thin solid ;
 }
 .number:hover{
-  background-color: rgb(177, 174, 174);
+  background-color: #b3b1b1;
 }
 .guessSubmit {
   margin: 5px;
   cursor: pointer;
 }
-
-
-
-
 
 .newStartButton{
   cursor: pointer;
@@ -145,6 +141,7 @@
   width: 750px;
   /* border: thin solid #ddd; */
 }
+
 .insideBox{
   display: flex;
   flex-direction: row;
@@ -152,6 +149,7 @@
   align-items: center;
   width: 350px;
 }
+
 .message{
   width: 350px;
   padding: 5px;
@@ -159,8 +157,8 @@
   border: thin solid rgb(207, 218, 219);
   height: 70px;
   text-align: center;
-
 }
+
 .guessRow {
   margin: .5px;
   display: flex;

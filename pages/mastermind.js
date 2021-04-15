@@ -20,9 +20,14 @@ import {
 import "bootstrap/dist/css/bootstrap.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBrain } from '@fortawesome/free-solid-svg-icons';
+// import {Howl, Howler} from 'howler';
 
 
 const Matermind = () => {
+  //  const audioClips = [
+  //   {sound: "https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-four/cartoon_fail_strings_trumpet.mp3?_=1", lable: "losing"},
+  //   {sound: "https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-12634/zapsplat_human_male_shout_yee_haa_14416.mp3", lable: "winning"}
+  //   ]
     const combination = 4;
     const [newGame, setNewGame] = useState(false);
     const [random, setRandom] = useState([]);
@@ -38,6 +43,16 @@ const Matermind = () => {
 
     const isMounted = useRef(false);
     const res = useRef(["", "", "", ""]);
+
+    // const soundPlay =(src)=>{
+    //   const sound = new Howl({
+    //     src,
+    //     html5:true
+    //   })
+    //   sound.play();
+    //   sound.rate(1);
+    // }
+    
     useEffect(async () => {
       if (isMounted.current) {
         const result = await axios(
@@ -137,7 +152,9 @@ const Matermind = () => {
    </Jumbotron> 
    
    : solved ? 
+    
    <>
+        {/* {soundPlay(audioClips[1].sound)} */}
       <Alert  variant="success" className={styles.solved}>
         <Alert.Heading>Congratulations!</Alert.Heading>
         <p>
@@ -161,6 +178,8 @@ const Matermind = () => {
    </p>
    <hr />
    <div className="d-flex justify-content-end">
+   {/* {soundPlay(audioClips[0].sound)} */}
+
      <Button onClick={() => setHasStarted(false)} variant="outline-danger">
        Back to game!
      </Button>
