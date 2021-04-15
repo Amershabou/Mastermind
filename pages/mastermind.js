@@ -14,7 +14,7 @@ import React, {
 
 
   
-  const matermind = () => {
+  const Matermind = () => {
       const combination = 4;
       const [newGame, setNewGame] = useState(false);
       const [random, setRandom] = useState([]);
@@ -22,9 +22,10 @@ import React, {
       const [responseHistory, setResponseHistory] = useState([]);
       const [messages, setMessages] = useState([]);
       const [gusses, setGuesses] = useState(10);
-      const [count, setCount] = useState(0);
+      const [count, setCount] = useState(1);
       const [hasStarted, setHasStarted] = useState(false);
       const [solved, setSolved] = useState(false);
+      const [gameOver, setGameOver] = useState(false)
   
       const isMounted = useRef(false);
       const res = useRef(["", "", "", ""]);
@@ -39,11 +40,12 @@ import React, {
           setResponse(res.current);
           setResponseHistory(Array(1).fill(res.current));
           setGuesses(10);
-          setCount(0);
+          setCount(1);
           setNewGame(false);
           setHasStarted(true);
           setSolved(false);
           setMessages([]);
+          setGameOver(false);
           Array.from(document.querySelectorAll("input")).forEach(
             input => (input.value = "")
           );
@@ -56,7 +58,6 @@ import React, {
       const handleClick = (e) => {
         e.preventDefault();
         let id = e.target.id;
-        console.log("id--->",typeof id)
         if (res.current[res.current.length -1] !== ""){
           return;
         }
@@ -73,10 +74,19 @@ import React, {
         e.preventDefault();
         if (res.current.includes("")) return;
         let newReponsehistory = responseHistory;
-        newReponsehistory[count] = response;
-        newReponsehistory.push(["","","",""])
-        setResponseHistory(newReponsehistory);
+        newReponsehistory[count - 1] = response;
+        // if (count <= 10) {
+        //   newReponsehistory.push(["","","",""])
+        // }
         setGuesses(gusses - 1)
+        if (gusses === 1) {
+          setTimeout(()=> setGameOver(true), 100)
+        } else {
+          newReponsehistory.push(["","","",""])
+
+        }
+        setResponseHistory(newReponsehistory);
+
         setCount(count + 1);
         Array.from(document.querySelectorAll("input")).forEach(
           input => (input.value = "")
@@ -155,17 +165,27 @@ import React, {
       </Alert>
     </>
    
-   :<div className={styles.secondView}>
+   : gameOver && hasStarted?  <Alert  variant="danger" className={styles.solved}>
+   <Alert.Heading>You lost!</Alert.Heading>
+   <p>
+    Unfortunatley you have exausted all 10 guess attempts and no one matched the number!!! 
+    The number you were trying to guess {random}
+   </p>
+   <hr />
+   <div className="d-flex justify-content-end">
+     <Button onClick={() => setHasStarted(false)} variant="outline-danger">
+       Back to game!
+     </Button>
+   </div>
+ </Alert>
+:
+   <div className={styles.secondView}>
     <h1 className={styles.item}> Mastermind Game!</h1>
       <div className={styles.numbersTable}>
-       <p >
-         You have <b>{gusses} </b> Guesses Left
-       </p>
 
        <div className={styles.box}>
         <form className={styles.numbersBox}>
             {Array.from(Array(8)).map((x, i) => <button  id ={i} key={i} onClick = {handleClick} className={styles.number} >{i}</button>)}
-
         </form>
      
         <Button variant="success" className = {styles.guessSubmit} onClick = {checkIfMatch} >
@@ -173,30 +193,29 @@ import React, {
         </Button>
       </div>
      </div>
-    
      <div className={styles.guessBox}>
+     <p className={styles.text}>
+         You Have <b>{gusses} </b> Guesses Left
+       </p>
        {responseHistory.map((x, i) => 
          <div className={styles.guessRow} id ={i} key={i} > 
           <div className={styles.insideBox}> 
-            <div className={styles.text}>Attempt {i+1}</div>
+            {/* <div className={styles.text}>{i+1}</div> */}
            {responseHistory[i].map((num, idx) => 
              <button className={styles.square} id ={idx} key={idx}>
                {num}
              </button>)} 
           </div>
-           <div className={styles.message}> 
-              {messages[i]}
-          </div>
+          {messages[i] === "" ? <div></ div> :   <div className={styles.message}>{messages[i]}</ div> }  
          </div>)}
 
 
      </div>
-     <Button variant="primary"  className={styles.newStartButton}  onClick={()=>{setNewGame(true)}}>
+     <Button variant="secondary" className={styles.newStartButton}  onClick={()=>{setNewGame(true)}}>
        Start A New Game
       </Button>
     </div> }
-    
     </div>)
 }
 
-export default withRouter(matermind);
+export default withRouter(Matermind);
