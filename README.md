@@ -26,7 +26,7 @@ as feedback:
 
 ### Run Project Locally
 
-Assumes local installation of [Node.js](https://nodejs.org/en/download/)
+Assumes local installation of [npm](https://www.npmjs.com/get-npm)
 
 To run the project locally:
 
