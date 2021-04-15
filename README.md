@@ -17,19 +17,12 @@ as feedback:
 - The player had guessed a correct number and its correct location
 - The player’s guess was incorrect
 
-1. [Techs](#Techs)
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
 
 ## Techs
 
 - React
 - Bootstrap
 - Next.js
-
-
-## Usage
 
 ### Run Project Locally
 
