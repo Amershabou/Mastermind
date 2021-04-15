@@ -14,8 +14,8 @@ import {
 import styles from "./styles.module.css"
 import {
   Button,
-  Jumbotron,
-  Alert
+  Alert,
+  Form
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -28,7 +28,8 @@ const Matermind = () => {
   //   {sound: "https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-four/cartoon_fail_strings_trumpet.mp3?_=1", lable: "losing"},
   //   {sound: "https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-12634/zapsplat_human_male_shout_yee_haa_14416.mp3", lable: "winning"}
   //   ]
-    const combination = 4;
+    const [combination, setCombination] = useState(0);
+    const [playNumbers, SetPlayNumbers] = useState(0);
     const [newGame, setNewGame] = useState(false);
     const [random, setRandom] = useState([]);
     const [response, setResponse] = useState(["", "", "", ""]);
@@ -40,6 +41,8 @@ const Matermind = () => {
     const [solved, setSolved] = useState(false);
     const [gameOver, setGameOver] = useState(false);
     const [clicked, setClicked] = useState(0)
+    const [secondsLeft, setSecondsLeft] = useState(10);
+
 
     const isMounted = useRef(false);
     const res = useRef(["", "", "", ""]);
@@ -70,51 +73,44 @@ const Matermind = () => {
         setSolved(false);
         setMessages([]);
         setGameOver(false);
+        setSecondsLeft(10);
       } else {
         isMounted.current = true;
       }
     }, [newGame])
 
-    const handleClick = (e) => {
-      e.preventDefault();
-      let id = e.target.id;
-
-      setClicked(clicked + 1)
-
-      if (res.current[res.current.length - 1] !== "") {
-        return;
+    useEffect(() => {
+      if (secondsLeft > 0) {
+        const timerId = setTimeout(() => {
+          setSecondsLeft(secondsLeft - 1);
+        }, 1000);
+        return () => clearTimeout(timerId);
+      } else {
+        res.current=["X","X","X","X"];
+        handleGuess();
       }
-      for (let i = 0; i < res.current.length; i++) {
-        if (typeof res.current[i] !== "number") {
-          res.current[i] = Number(id);
-          setResponse(res.current)
-          let newReponsehistory = responseHistory;
-          newReponsehistory[count - 1] = res.current;
-          break;
-        }
-      }
+    }, [secondsLeft]);  
+
+    const onChangeOptions = () => {
+      console.log("here")
     }
-    const checkIfMatch = (e) => {
-      e.preventDefault();
-      if (res.current.includes("")) {
-        res.current = ["", "", "", ""];
-        setResponse(["", "", "", ""]);
-        return;
-      }
+  
+    const handleGuess = () => {
       let newReponsehistory = responseHistory;
       newReponsehistory[count - 1] = res.current;
       setGuesses(gusses - 1)
       if (gusses === 1) {
         setTimeout(() => setGameOver(true), 100)
-      } else if (response[3] !== "") {
+      } else if (response[3] !== "" || secondsLeft === 0) {
         newReponsehistory.push(["", "", "", ""])
-
       }
       setResponseHistory(newReponsehistory);
 
       setCount(count + 1);
       let newMessage = "";
-      if (utils.areEqual(random, res.current) === true) {
+      if (secondsLeft === 0) {
+        newMessage = "Oops! Time is up for this guess!"
+      } else if (utils.areEqual(random, res.current) === true) {
         newMessage = "Congratulations! If have gussed all the numbers and won the game!!!";
         setSolved(true);
       } else {
@@ -129,6 +125,36 @@ const Matermind = () => {
       setMessages(messages => [...messages, newMessage])
       res.current = ["", "", "", ""];
       setResponse(["", "", "", ""]);
+      setSecondsLeft(10);
+    }
+
+
+    const handleClick = (e) => {
+      e.preventDefault();
+      let id = e.target.id;
+      setClicked(clicked + 1)
+      if (res.current[res.current.length - 1] !== "") {
+        return;
+      }
+      for (let i = 0; i < res.current.length; i++) {
+        if (typeof res.current[i] !== "number") {
+          res.current[i] = Number(id);
+          setResponse(res.current)
+          let newReponsehistory = responseHistory;
+          newReponsehistory[count - 1] = res.current;
+          break;
+        }
+      }
+    }
+
+    const checkIfMatch = (e) => {
+      e.preventDefault();
+      if (res.current.includes("")) {
+        res.current = ["", "", "", ""];
+        setResponse(["", "", "", ""]);
+        return;
+      }
+      handleGuess();
     }
 
     const clearNumbers = () => {
@@ -139,17 +165,36 @@ const Matermind = () => {
 
     return (<div className = {styles.container}>
      {!hasStarted ?  
-     <Jumbotron className={styles.firstView} >
+     <div className={styles.firstView} >
        <h1 className={styles.item}> Master<FontAwesomeIcon icon={faBrain} />ind</h1>
        <p className={styles.text}>
        To start the game, click on the start button below!
        </p>
-    
+
+            <Form className={styles.options}>
+              <Form.Label>Combination</Form.Label>
+                <Form.Control as="select"
+                // autoFocus
+                placeholder="Type to filter..."
+                className={styles.option}
+                onChange={(e) => setCombination(Number(e.target.value))}
+                >
+                {Array.from(Array(10)).map((x, i) => <option  value={i+1}>{i+1}</option>)}
+                </Form.Control>
+                <Form.Label>Play Numbers</Form.Label>
+                <Form.Control as="select"
+                // autoFocus
+                className={styles.option}
+                onChange={(e) => SetPlayNumbers(Number(e.target.value) + 1)}
+                >
+                {Array.from(Array(10)).map((x, i) => <option  value={i}>{i}</option>)}
+                </Form.Control>
+              </Form>
       <Button variant="primary"  size="lg" block className={styles.startButton} onClick={()=>{setNewGame(true)}}>
        Start
       </Button>
    
-   </Jumbotron> 
+     </div> 
    
    : solved ? 
     
@@ -192,7 +237,7 @@ const Matermind = () => {
 
        <div className={styles.box}>
         <form className={styles.numbersBox}>
-            {Array.from(Array(8)).map((x, i) => <button  id ={i} key={i} onClick = {handleClick} className={styles.number} >{i}</button>)}
+            {Array.from(Array(playNumbers)).map((x, i) => <button  id ={i} key={i} onClick = {handleClick} className={styles.number} >{i}</button>)}
         </form>
      
        
@@ -218,6 +263,8 @@ const Matermind = () => {
          </div>)}
 
      </div>
+     <div className={styles.timer}>Time Remaining: {secondsLeft}</div>
+
      <div>
      <Button variant="success" className = {styles.guessSubmit} onClick = {checkIfMatch} >
           Submit A Guess
