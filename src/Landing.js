@@ -33,6 +33,7 @@ const Landing = ({setAttempts,setCombination,SetPlayNumbers, setNewGame, newGame
                     <Form.Control 
                     as="select"
                     autoFocus
+                    size = "lg"
                     className={styles.option}
                     onChange={(e) => setCombination(Number(e.target.value))}
                     >
@@ -50,6 +51,7 @@ const Landing = ({setAttempts,setCombination,SetPlayNumbers, setNewGame, newGame
                       className={styles.option}
                       as="select"
                       autoFocus
+                      size = "lg"
                       onChange={(e) => SetPlayNumbers(Number(e.target.value))}
                      >
                      {Array.from(Array(8)).map((x, i) => <option  value={i+2}>{i+2}</option>)}
@@ -66,6 +68,7 @@ const Landing = ({setAttempts,setCombination,SetPlayNumbers, setNewGame, newGame
                        className={styles.option}
                        as="select"
                        autoFocus
+                       size = "lg"
                        onChange={(e) => setAttempts(Number(e.target.value))}
                       >
                       {Array.from(Array(10)).map((x, i) => <option  value={i+1}>{i+1}</option>)}

@@ -1,4 +1,4 @@
-# Mastermind Game
+# Mastermind Game - [Demo](https://youtu.be/RYYr2wMF5lE)
 > Mastermind is a Web code-breaking game for two players, the computer and the user.
 
 This is a game where a player tries to guess the number combinations. At the end of each
@@ -33,6 +33,7 @@ To run the project locally:
 - Clone or fork this repository.
 - Run `npm install`
 - Run `npm run dev` (This starts the game on port 3000)
+- Go to http://localhost:3000/mastermind
 
 
 Enjoy the game :)
