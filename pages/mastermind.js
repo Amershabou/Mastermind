@@ -27,7 +27,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 // import {Howl, Howler} from 'howler';
 
-
 const Matermind = () => {
     //  const audioClips = [
     //   {sound: "https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-four/cartoon_fail_strings_trumpet.mp3?_=1", lable: "losing"},
@@ -49,6 +48,7 @@ const Matermind = () => {
     const [clicked, setClicked] = useState(0)
     const [secondsLeft, setSecondsLeft] = useState(combination * 2);
 
+
     let newNumberArray = Array(combination).fill("");
 
     const isMounted = useRef(false);
@@ -62,8 +62,6 @@ const Matermind = () => {
     //   sound.play();
     //   sound.rate(1);
     // }
-
-
 
     useEffect(async () => {
       if (isMounted.current) {
@@ -158,7 +156,6 @@ const Matermind = () => {
     }
 
 
-
     const checkIfMatch = (e) => {
       e.preventDefault();
       if (res.current.includes("")) {
@@ -176,125 +173,126 @@ const Matermind = () => {
     }
 
 
-    return (<div className = {styles.container}>
-     {!hasStarted ?  
-     <div className={styles.firstView} >
-       <h1 className={styles.item}> Master<FontAwesomeIcon icon={faBrain} />ind</h1>
-       <p className={styles.text}>
-       To start the game, select the options below and click on the start button!
-       </p>
-            <Form className={styles.form}>
-              <Form.Label className={styles.label}>Combinations</Form.Label>
-                <Form.Control as="select"
-                // autoFocus
-                placeholder="Type to filter..."
-                className={styles.option}
-                onChange={(e) => setCombination(Number(e.target.value))}
-                >
-                {Array.from(Array(8)).map((x, i) => <option  value={i+2}>{i+2}</option>)}
-                </Form.Control>
-                <Form.Label className={styles.label}>Numbers</Form.Label>
-                <Form.Control as="select"
-                autoFocus
-                className={styles.option}
-                onChange={(e) => SetPlayNumbers(Number(e.target.value))}
-                >
-                {Array.from(Array(8)).map((x, i) => <option  value={i+2}>{i+2}</option>)}
-                </Form.Control>
-                <Form.Label className={styles.label}>Attempts</Form.Label>
-                <Form.Control as="select"
-                autoFocus
-                className={styles.option}
-                onChange={(e) => setAttempts(Number(e.target.value))}
-                >
-                {Array.from(Array(9)).map((x, i) => <option  value={i+1}>{i+1}</option>)}
-                </Form.Control>
-              </Form>
+    return (
+      <div className = {styles.container}>
+       {!hasStarted ?  
+        <div className={styles.firstView} >
+          <h1 className={styles.item}> Master<FontAwesomeIcon icon={faBrain} />ind</h1>
+          <p className={styles.text}>
+          To start the game, select the options below and click on the start button!
+          </p>
+                <Form className={styles.form}>
+                  <Form.Label className={styles.label}>Combinations</Form.Label>
+                    <Form.Control as="select"
+                    // autoFocus
+                    placeholder="Type to filter..."
+                    className={styles.option}
+                    onChange={(e) => setCombination(Number(e.target.value))}
+                    >
+                    {Array.from(Array(8)).map((x, i) => <option  value={i+2}>{i+2}</option>)}
+                    </Form.Control>
+                    <Form.Label className={styles.label}>Numbers</Form.Label>
+                    <Form.Control as="select"
+                    autoFocus
+                    className={styles.option}
+                    onChange={(e) => SetPlayNumbers(Number(e.target.value))}
+                    >
+                    {Array.from(Array(8)).map((x, i) => <option  value={i+2}>{i+2}</option>)}
+                    </Form.Control>
+                    <Form.Label className={styles.label}>Attempts</Form.Label>
+                    <Form.Control as="select"
+                    autoFocus
+                    className={styles.option}
+                    onChange={(e) => setAttempts(Number(e.target.value))}
+                    >
+                    {Array.from(Array(9)).map((x, i) => <option  value={i+1}>{i+1}</option>)}
+                    </Form.Control>
+                  </Form>
 
-      <Button variant="primary"  size="lg" block className={styles.startButton} onClick={()=>{setNewGame(!newGame)}}>
-       Start
-      </Button>
-     </div>  
-   : solved ? 
-   <>
-        {/* {soundPlay(audioClips[1].sound)} */}
-      <Alert  variant="success" className={styles.solved}>
-        <Alert.Heading className = {styles.alertMessage}>Congratulations!</Alert.Heading>
-        <p className = {styles.alertMessage}>
-         You have gussed all the numbers and won the game!!! 
-         The number you guessed is {random}
-        </p>
-        <hr />
-        <div className="d-flex justify-content-end">
-          <Button onClick={() => setHasStarted(false)} variant="outline-success">
-            Back to game!
+          <Button variant="primary"  size="lg" block className={styles.startButton} onClick={()=>{setNewGame(!newGame)}}>
+          Start
           </Button>
-        </div>
-      </Alert>
-    </>
-   
-   : gameOver && hasStarted?  
-   <Alert  variant="danger" className={styles.solved}>
-   <Alert.Heading className = {styles.alertMessage}>Sorry, you've lost!</Alert.Heading>
-   <p className = {styles.alertMessage}>
-   Unfortunately you have exhausted all {attempts} guess attempts and none has matched the number!!!
-   </p>
-   <p className = {styles.alertMessage}>
-   The number you were trying to guess was {random}
-   </p>
-   <hr />
-   <div className="d-flex justify-content-end">
-   {/* {soundPlay(audioClips[0].sound)} */}
+        </div>  
+      : solved ? 
+      <>
+            {/* {soundPlay(audioClips[1].sound)} */}
+          <Alert  variant="success" className={styles.solved}>
+            <Alert.Heading className = {styles.alertMessage}>Congratulations!</Alert.Heading>
+            <p className = {styles.alertMessage}>
+            You have gussed all the numbers and won the game!!! 
+            The number you guessed is {random}
+            </p>
+            <hr />
+            <div className="d-flex justify-content-end">
+              <Button onClick={() => setHasStarted(false)} variant="outline-success">
+                Back to game!
+              </Button>
+            </div>
+          </Alert>
+        </>
+      
+      : gameOver && hasStarted?  
+        <Alert  variant="danger" className={styles.solved}>
+            <Alert.Heading className = {styles.alertMessage}>Sorry, you've lost!</Alert.Heading>
+            <p className = {styles.alertMessage}>
+              Unfortunately you have exhausted all {attempts} guess attempts and none has matched the number!!!
+            </p>
+            <p className = {styles.alertMessage}>
+              The number you were trying to guess was {random}
+            </p>
+            <hr/>
+            <div className="d-flex justify-content-end">
+              {/* {soundPlay(audioClips[0].sound)} */}
 
-     <Button onClick={() => setHasStarted(false)} variant="outline-danger">
-       Back to game!
-     </Button>
-  </div>
- </Alert>
-:
-   <div className={styles.secondView}>
-    <h1 className={styles.item}> Master<FontAwesomeIcon icon={faBrain} />ind</h1>
-      <div className={styles.numbersTable}>
+              <Button onClick={() => setHasStarted(false)} variant="outline-danger">
+              Back to game!
+              </Button>
+            </div>
+        </Alert>
 
-       <div className={styles.box}>
-        <form className={styles.numbersBox}>
-            {Array.from(Array(playNumbers)).map((x, i) => <button  id ={i+1} key={i+1} onClick = {handleClick} className={styles.number} >{i+1}</button>)}
-        </form>
-     
-       
-        <Button variant="secondary" className={styles.newStartButton}  onClick={()=>{setNewGame(true)}}>
-       Start A New Game
-      </Button>
-      </div>
-     </div>
-     <div className={styles.guessBox}>
-     <p className={styles.text}>
-         You Have <b>{gusses} </b> Guesses Left
-       </p>
-       {responseHistory.map((x, i) => 
-         <div className={styles.guessRow} id ={i} key={i} > 
-          <div className={styles.insideBox}> 
-           {responseHistory[i].map((num, idx) => 
-             <button className={styles.square} id ={idx} key={idx}>
-               {num}
-             </button>)} 
+      :
+        <div className={styles.secondView}>
+          <h1 className={styles.item}> Master<FontAwesomeIcon icon={faBrain} />ind</h1>
+          <div className={styles.numbersTable}>
+
+            <div className={styles.box}>
+              <form className={styles.numbersBox}>
+                  {Array.from(Array(playNumbers)).map((x, i) => <button  id ={i+1} key={i+1} onClick = {handleClick} className={styles.number} >{i+1}</button>)}
+              </form>
+          
+              <Button variant="secondary" className={styles.newStartButton}  onClick={()=>{setNewGame(true)}}>
+                Start A New Game
+              </Button>
+            </div>
           </div>
-          {messages[i] === "" ? <div></ div> :   <div className={styles.message}>{messages[i]}</ div> }  
-         </div>)}
-     </div>
-     <div className={styles.timer}>Time Remaining: {secondsLeft}</div>
+          <div className={styles.guessBox}>
+            <p className={styles.text}>
+              You Have <b>{gusses} </b> Guesses Left
+            </p>
+              {responseHistory.map((x, i) => 
+              <div className={styles.guessRow} id ={i} key={i} > 
+                <div className={styles.insideBox}> 
+                {responseHistory[i].map((num, idx) => 
+                  <button className={styles.square} id ={idx} key={idx}>
+                    {num}
+                  </button>)} 
+                </div>
+                {messages[i] === "" ? <div></ div> :   <div className={styles.message}>{messages[i]}</ div> }  
+              </div>)}
+          </div>
+          <div className={styles.timer}>Time Remaining: {secondsLeft}</div>
 
-     <div>
-     <Button variant="success" className = {styles.guessSubmit} onClick = {checkIfMatch} >
-          Submit A Guess
-      </Button>
-      <Button variant="danger" className = {styles.guessSubmit} onClick = {clearNumbers} >
-          Clear Numbers
-      </Button>
-     </div>
-     <FontAwesomeIcon icon={faChevronCircleLeft} className={styles.exit} onClick={() => setHasStarted(false)}/> 
-    </div> }
-    </div>)
-}
+          <div>
+            <Button variant="success" className = {styles.guessSubmit} onClick = {checkIfMatch} >
+              Submit A Guess
+            </Button>
+            <Button variant="danger" className = {styles.guessSubmit} onClick = {clearNumbers} >
+              Clear Numbers
+            </Button>
+          </div>
+          <FontAwesomeIcon icon={faChevronCircleLeft} className={styles.exit} onClick={() => setHasStarted(false)}/> 
+          </div> }
+    </div>
+    )}
 
 export default withRouter(Matermind);

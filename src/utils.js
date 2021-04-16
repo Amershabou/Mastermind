@@ -24,4 +24,4 @@ export const utils = {
       return false;
     }
   }
-}
+};
