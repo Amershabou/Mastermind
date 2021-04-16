@@ -9,48 +9,28 @@
   
 }
 
-.options {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  justify-content: center;
-  align-items: center;
-
-}
 
 .form {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  margin-top: 10px;
   justify-content: center;
   align-items: center;
 
 }
 
 .option {
-  padding-left: 5px;
-  margin: 0.5px;
-  flex: 1;
+  margin: 7px;
+  flex: 2;
 }
-.labels{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 
-}
-.label{
-    padding-left: 5px;
-    padding-right: 2px;
-    /* margin-left: 5px; */
-    color: rgba(14, 33, 44, 0.534);
-    font-weight: 400;
-
-}
 .text{
   padding: 1px;
   font-family: 'Gruppo';font-size: 20px;
   text-align: center;
+  color: #666;
  } 
 
 .solved{
@@ -157,7 +137,7 @@
   background-color: #b3b1b1;
 }
 .guessSubmit {
-  margin: 5px;
+  margin: 2px;
   cursor: pointer;
 }
 
@@ -236,10 +216,15 @@
   font-size:45px;
    /* position: absolute;
   top: 16px; */
-  left: 50px; 
-  padding-top: 10px;
   color: #6c757d;
   cursor: pointer;
   position: relative;
   left: 0;
+}
+.exitText{
+  margin-top: 3px;
+  margin-bottom: 2px;
+  font-family: 'Gruppo';font-size: 20px;
+  text-align: center;
+  color: #666;
 }

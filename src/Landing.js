@@ -2,7 +2,9 @@ import React from "react";
 import styles from "../pages/styles.module.css";
 import {
   Button,
-  Form
+  Form,
+  Tooltip,
+  OverlayTrigger
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import {
@@ -22,35 +24,55 @@ const Landing = ({setAttempts,setCombination,SetPlayNumbers, setNewGame, newGame
           </p>
                
                 <Form className={styles.form}>
-                    <Form.Label className={styles.label}>Combinations</Form.Label>
-                    <Form.Control as="select"
-                    // autoFocus
-                    placeholder="Type to filter..."
+                  <OverlayTrigger
+                      overlay={
+                      <Tooltip id={'tooltip-top'}>
+                        Number Combinations 
+                      </Tooltip>
+                      }>
+                    <Form.Control 
+                    as="select"
+                    autoFocus
                     className={styles.option}
                     onChange={(e) => setCombination(Number(e.target.value))}
                     >
                     {Array.from(Array(8)).map((x, i) => <option  value={i+2}>{i+2}</option>)}
                     </Form.Control>
-                  
-                    <Form.Label className={styles.label}>Numbers</Form.Label>
-                    <Form.Control as="select"
-                    autoFocus
-                    className={styles.option}
-                    onChange={(e) => SetPlayNumbers(Number(e.target.value))}
-                    >
-                    {Array.from(Array(8)).map((x, i) => <option  value={i+2}>{i+2}</option>)}
-                    </Form.Control>
-                  
-                    <Form.Label className={styles.label}>Attempts</Form.Label>
-                    <Form.Control as="select"
-                    autoFocus
-                    className={styles.option}
-                    onChange={(e) => setAttempts(Number(e.target.value))}
-                    >
-                    {Array.from(Array(9)).map((x, i) => <option  value={i+1}>{i+1}</option>)}
-                    </Form.Control>
-                </Form>
+                  </OverlayTrigger>
 
+                  <OverlayTrigger
+                      overlay={
+                      <Tooltip id={'tooltip-top'}>
+                        Play Numbers 
+                      </Tooltip>
+                      }>
+                      <Form.Control 
+                      className={styles.option}
+                      as="select"
+                      autoFocus
+                      onChange={(e) => SetPlayNumbers(Number(e.target.value))}
+                     >
+                     {Array.from(Array(8)).map((x, i) => <option  value={i+2}>{i+2}</option>)}
+                    </Form.Control>
+                  </OverlayTrigger>
+                  
+                  <OverlayTrigger
+                      overlay={
+                      <Tooltip id={'tooltip-top'}>
+                        Number Of Attempts 
+                      </Tooltip>
+                      }>
+                      <Form.Control 
+                       className={styles.option}
+                       as="select"
+                       autoFocus
+                       onChange={(e) => setAttempts(Number(e.target.value))}
+                      >
+                      {Array.from(Array(10)).map((x, i) => <option  value={i+1}>{i+1}</option>)}
+                      </Form.Control>
+                  </OverlayTrigger>
+                </Form>
+            
           <Button variant="primary"  size="lg" block className={styles.startButton} onClick={()=>{setNewGame(!newGame)}}>
           Start
           </Button>
