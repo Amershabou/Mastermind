@@ -66,7 +66,7 @@ const Matermind = () => {
     useEffect(async () => {
       if (isMounted.current) {
         const result = await axios(
-          `https://www.random.org/integers/?num=${combination}&min=1&max=${playNumbers}&col=1&base=10&format=plain&rnd=new`,
+          `https://www.random.org/integers/?num=${combination}&min=0&max=${playNumbers}&col=1&base=10&format=plain&rnd=new`,
         );
         let number = result.data.split("").filter((num, key) => key % 2 === 0).map((num) => Number(num));
         setRandom(number);
@@ -257,7 +257,7 @@ const Matermind = () => {
 
             <div className={styles.box}>
               <form className={styles.numbersBox}>
-                  {Array.from(Array(playNumbers)).map((x, i) => <button  id ={i+1} key={i+1} onClick = {handleClick} className={styles.number} >{i+1}</button>)}
+                  {Array.from(Array(playNumbers + 1)).map((x, i) => <button  id ={i+1} key={i} onClick = {handleClick} className={styles.number} >{i}</button>)}
               </form>
           
               <Button variant="secondary" className={styles.newStartButton}  onClick={()=>{setNewGame(true)}}>
