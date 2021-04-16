@@ -28,24 +28,26 @@ const Matermind = () => {
   //   {sound: "https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-four/cartoon_fail_strings_trumpet.mp3?_=1", lable: "losing"},
   //   {sound: "https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-12634/zapsplat_human_male_shout_yee_haa_14416.mp3", lable: "winning"}
   //   ]
-    const [combination, setCombination] = useState(0);
-    const [playNumbers, SetPlayNumbers] = useState(0);
+    const [combination, setCombination] = useState(2);
+    const [playNumbers, SetPlayNumbers] = useState(2);
+    const [attempts, setAttempts] = useState(2);
     const [newGame, setNewGame] = useState(false);
     const [random, setRandom] = useState([]);
-    const [response, setResponse] = useState(["", "", "", ""]);
+    const [response, setResponse] = useState([]);
     const [responseHistory, setResponseHistory] = useState([]);
     const [messages, setMessages] = useState([]);
-    const [gusses, setGuesses] = useState(10);
+    const [gusses, setGuesses] = useState(attempts);
     const [count, setCount] = useState(1);
     const [hasStarted, setHasStarted] = useState(false);
     const [solved, setSolved] = useState(false);
     const [gameOver, setGameOver] = useState(false);
     const [clicked, setClicked] = useState(0)
-    const [secondsLeft, setSecondsLeft] = useState(10);
+    const [secondsLeft, setSecondsLeft] = useState(combination * 2);
 
+    let newNumberArray = Array(combination).fill("");
 
     const isMounted = useRef(false);
-    const res = useRef(["", "", "", ""]);
+    const res = useRef(newNumberArray);
 
     // const soundPlay =(src)=>{
     //   const sound = new Howl({
@@ -55,46 +57,42 @@ const Matermind = () => {
     //   sound.play();
     //   sound.rate(1);
     // }
-    
+
     useEffect(async () => {
       if (isMounted.current) {
         const result = await axios(
-          `https://www.random.org/integers/?num=${combination}&min=0&max=7&col=1&base=10&format=plain&rnd=new`,
+          `https://www.random.org/integers/?num=${combination}&min=1&max=${playNumbers}&col=1&base=10&format=plain&rnd=new`,
         );
         let number = result.data.split("").filter((num, key) => key % 2 === 0).map((num) => Number(num));
         setRandom(number);
-        res.current = ["", "", "", ""]
+        res.current = newNumberArray;
         setResponse(res.current);
         setResponseHistory(Array(1).fill(res.current));
-        setGuesses(10);
+        setGuesses(attempts);
         setCount(1);
         setNewGame(false);
         setHasStarted(true);
         setSolved(false);
         setMessages([]);
         setGameOver(false);
-        setSecondsLeft(10);
+        setSecondsLeft(combination * 2);
       } else {
         isMounted.current = true;
       }
     }, [newGame])
 
     useEffect(() => {
-      if (secondsLeft > 0) {
+      if (secondsLeft > 0 && hasStarted ) {
         const timerId = setTimeout(() => {
           setSecondsLeft(secondsLeft - 1);
         }, 1000);
         return () => clearTimeout(timerId);
-      } else {
-        res.current=["X","X","X","X"];
+      } else if (secondsLeft === 0) {
+        res.current=Array(combination).fill("X");
         handleGuess();
       }
-    }, [secondsLeft]);  
+    }, [hasStarted, secondsLeft]);  
 
-    const onChangeOptions = () => {
-      console.log("here")
-    }
-  
     const handleGuess = () => {
       let newReponsehistory = responseHistory;
       newReponsehistory[count - 1] = res.current;
@@ -102,7 +100,7 @@ const Matermind = () => {
       if (gusses === 1) {
         setTimeout(() => setGameOver(true), 100)
       } else if (response[3] !== "" || secondsLeft === 0) {
-        newReponsehistory.push(["", "", "", ""])
+        newReponsehistory.push(newNumberArray)
       }
       setResponseHistory(newReponsehistory);
 
@@ -123,9 +121,9 @@ const Matermind = () => {
         }
       }
       setMessages(messages => [...messages, newMessage])
-      res.current = ["", "", "", ""];
-      setResponse(["", "", "", ""]);
-      setSecondsLeft(10);
+      res.current = newNumberArray;
+      setResponse(newNumberArray);
+      setSecondsLeft(combination * 2);
     }
 
 
@@ -150,17 +148,17 @@ const Matermind = () => {
     const checkIfMatch = (e) => {
       e.preventDefault();
       if (res.current.includes("")) {
-        res.current = ["", "", "", ""];
-        setResponse(["", "", "", ""]);
+        res.current = newNumberArray;
+        setResponse(newNumberArray);
         return;
       }
       handleGuess();
     }
 
     const clearNumbers = () => {
-      res.current = ["", "", "", ""];
-      setResponse(["", "", "", ""]);
-      responseHistory[responseHistory.length - 1] = ["", "", "", ""];
+      res.current = newNumberArray;
+      setResponse(newNumberArray);
+      responseHistory[responseHistory.length - 1] = newNumberArray;
     }
 
     return (<div className = {styles.container}>
@@ -179,15 +177,23 @@ const Matermind = () => {
                 className={styles.option}
                 onChange={(e) => setCombination(Number(e.target.value))}
                 >
-                {Array.from(Array(10)).map((x, i) => <option  value={i+1}>{i+1}</option>)}
+                {Array.from(Array(8)).map((x, i) => <option  value={i+2}>{i+2}</option>)}
                 </Form.Control>
-                <Form.Label>Play Numbers</Form.Label>
+                <Form.Label>Numbers</Form.Label>
                 <Form.Control as="select"
                 // autoFocus
                 className={styles.option}
-                onChange={(e) => SetPlayNumbers(Number(e.target.value) + 1)}
+                onChange={(e) => SetPlayNumbers(Number(e.target.value))}
                 >
-                {Array.from(Array(10)).map((x, i) => <option  value={i}>{i}</option>)}
+                {Array.from(Array(8)).map((x, i) => <option  value={i+2}>{i+2}</option>)}
+                </Form.Control>
+                <Form.Label>Attempts</Form.Label>
+                <Form.Control as="select"
+                // autoFocus
+                className={styles.option}
+                onChange={(e) => setAttempts(Number(e.target.value))}
+                >
+                {Array.from(Array(8)).map((x, i) => <option  value={i+2}>{i+2}</option>)}
                 </Form.Control>
               </Form>
       <Button variant="primary"  size="lg" block className={styles.startButton} onClick={()=>{setNewGame(true)}}>
@@ -218,7 +224,7 @@ const Matermind = () => {
    : gameOver && hasStarted?  <Alert  variant="danger" className={styles.solved}>
    <Alert.Heading>Sorry, you've lost!</Alert.Heading>
    <p>
-   Unfortunately you have exhausted all 10 guess attempts and none has matched the number!!!
+   Unfortunately you have exhausted all {attempts} guess attempts and none has matched the number!!!
    The number you were trying to guess was {random}
    </p>
    <hr />
