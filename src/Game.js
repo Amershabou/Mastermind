@@ -46,7 +46,7 @@ const Game = ({handleReturnToMain,playNumbers,handleClick, setNewGame, gusses, m
         </div>
         <div className={styles.timer}>Time Remaining: {secondsLeft}</div>
 
-        <div>
+        <div className = {styles.guessSubmit}>
         <Button variant="success" className = {styles.guessSubmit} onClick = {checkIfMatch} >
             Submit A Guess
         </Button>
@@ -54,6 +54,7 @@ const Game = ({handleReturnToMain,playNumbers,handleClick, setNewGame, gusses, m
             Clear Numbers
         </Button>
         </div>
+        <p className={styles.exitText }>Exit</p>
         <FontAwesomeIcon icon={faChevronCircleLeft} className={styles.exit} onClick={handleReturnToMain}/> 
     </div> 
 )
