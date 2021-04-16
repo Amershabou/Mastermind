@@ -93,13 +93,13 @@ const Matermind = () => {
       if (secondsLeft === 0) {
         newMessage = "Oops! Time is up for this guess!"
       } else if (utils.areEqual(random, res.current) === true) {
-        newMessage = "Congratulations! If have gussed all the numbers and won the game!!!";
+        newMessage = "Congratulations! You have guessed all the numbers and won the game!!!";
         setSolved(true);
       } else {
         if (utils.compare(random, response)[0]) {
-          newMessage = "Good try! You have guessed a current number and its current locartion";
+          newMessage = "Good try! You have guessed a current number and its current location!";
         } else if (utils.compare(random, response)[1]) {
-          newMessage = "Good try! You have guessed a current number";
+          newMessage = "Good try! You have guessed a current number!";
         } else {
           newMessage = `Oops! Your guess isn't correct. Try again!`;
         }

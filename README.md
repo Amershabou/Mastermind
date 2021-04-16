@@ -1,4 +1,4 @@
-# Mastermind Game - [Demo](https://youtu.be/XwiuffqZLhI)
+# Mastermind Game - [Demo](https://youtu.be/UwkMJSqqb7k)
 > Mastermind is a Web code-breaking game for two players, the computer and the user.
 
 This is a game where a player tries to guess the number combinations. At the end of each
