@@ -172,6 +172,13 @@ const Matermind = () => {
       responseHistory[responseHistory.length - 1] = newNumberArray;
     }
 
+    const handleReturnToMain = () => {
+      setHasStarted(false);
+      setCombination(2);
+      SetPlayNumbers(2);
+      setAttempts(1);
+      setSecondsLeft(combination * 2);
+    }
 
     return (
       <div className = {styles.container}>
@@ -224,7 +231,7 @@ const Matermind = () => {
             </p>
             <hr />
             <div className="d-flex justify-content-end">
-              <Button onClick={() => setHasStarted(false)} variant="outline-success">
+              <Button onClick={handleReturnToMain} variant="outline-success">
                 Back to game!
               </Button>
             </div>
@@ -244,7 +251,7 @@ const Matermind = () => {
             <div className="d-flex justify-content-end">
               {/* {soundPlay(audioClips[0].sound)} */}
 
-              <Button onClick={() => setHasStarted(false)} variant="outline-danger">
+              <Button onClick={handleReturnToMain} variant="outline-danger">
               Back to game!
               </Button>
             </div>
@@ -290,7 +297,7 @@ const Matermind = () => {
               Clear Numbers
             </Button>
           </div>
-          <FontAwesomeIcon icon={faChevronCircleLeft} className={styles.exit} onClick={() => setHasStarted(false)}/> 
+          <FontAwesomeIcon icon={faChevronCircleLeft} className={styles.exit} onClick={handleReturnToMain}/> 
           </div> }
     </div>
     )}
