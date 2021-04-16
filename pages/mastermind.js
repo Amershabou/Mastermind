@@ -18,19 +18,24 @@ import {
   Form
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBrain } from '@fortawesome/free-solid-svg-icons';
+import {
+  FontAwesomeIcon
+} from '@fortawesome/react-fontawesome';
+import {
+  faChevronCircleLeft,
+  faBrain
+} from '@fortawesome/free-solid-svg-icons';
 // import {Howl, Howler} from 'howler';
 
 
 const Matermind = () => {
-  //  const audioClips = [
-  //   {sound: "https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-four/cartoon_fail_strings_trumpet.mp3?_=1", lable: "losing"},
-  //   {sound: "https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-12634/zapsplat_human_male_shout_yee_haa_14416.mp3", lable: "winning"}
-  //   ]
+    //  const audioClips = [
+    //   {sound: "https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-four/cartoon_fail_strings_trumpet.mp3?_=1", lable: "losing"},
+    //   {sound: "https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-12634/zapsplat_human_male_shout_yee_haa_14416.mp3", lable: "winning"}
+    //   ]
     const [combination, setCombination] = useState(2);
     const [playNumbers, SetPlayNumbers] = useState(2);
-    const [attempts, setAttempts] = useState(2);
+    const [attempts, setAttempts] = useState(1);
     const [newGame, setNewGame] = useState(false);
     const [random, setRandom] = useState([]);
     const [response, setResponse] = useState([]);
@@ -58,6 +63,8 @@ const Matermind = () => {
     //   sound.rate(1);
     // }
 
+
+
     useEffect(async () => {
       if (isMounted.current) {
         const result = await axios(
@@ -70,7 +77,7 @@ const Matermind = () => {
         setResponseHistory(Array(1).fill(res.current));
         setGuesses(attempts);
         setCount(1);
-        setNewGame(false);
+        setNewGame(true);
         setHasStarted(true);
         setSolved(false);
         setMessages([]);
@@ -81,17 +88,21 @@ const Matermind = () => {
       }
     }, [newGame])
 
+
+
     useEffect(() => {
-      if (secondsLeft > 0 && hasStarted ) {
+      if (secondsLeft > 0 && hasStarted) {
         const timerId = setTimeout(() => {
           setSecondsLeft(secondsLeft - 1);
         }, 1000);
         return () => clearTimeout(timerId);
       } else if (secondsLeft === 0) {
-        res.current=Array(combination).fill("X");
+        res.current = Array(combination).fill("X");
         handleGuess();
       }
-    }, [hasStarted, secondsLeft]);  
+    }, [hasStarted, secondsLeft]);
+
+
 
     const handleGuess = () => {
       let newReponsehistory = responseHistory;
@@ -127,6 +138,7 @@ const Matermind = () => {
     }
 
 
+
     const handleClick = (e) => {
       e.preventDefault();
       let id = e.target.id;
@@ -145,6 +157,8 @@ const Matermind = () => {
       }
     }
 
+
+
     const checkIfMatch = (e) => {
       e.preventDefault();
       if (res.current.includes("")) {
@@ -161,16 +175,16 @@ const Matermind = () => {
       responseHistory[responseHistory.length - 1] = newNumberArray;
     }
 
+
     return (<div className = {styles.container}>
      {!hasStarted ?  
      <div className={styles.firstView} >
        <h1 className={styles.item}> Master<FontAwesomeIcon icon={faBrain} />ind</h1>
        <p className={styles.text}>
-       To start the game, click on the start button below!
+       To start the game, select the options below and click on the start button!
        </p>
-
-            <Form className={styles.options}>
-              <Form.Label>Combination</Form.Label>
+            <Form className={styles.form}>
+              <Form.Label className={styles.label}>Combinations</Form.Label>
                 <Form.Control as="select"
                 // autoFocus
                 placeholder="Type to filter..."
@@ -179,36 +193,34 @@ const Matermind = () => {
                 >
                 {Array.from(Array(8)).map((x, i) => <option  value={i+2}>{i+2}</option>)}
                 </Form.Control>
-                <Form.Label>Numbers</Form.Label>
+                <Form.Label className={styles.label}>Numbers</Form.Label>
                 <Form.Control as="select"
-                // autoFocus
+                autoFocus
                 className={styles.option}
                 onChange={(e) => SetPlayNumbers(Number(e.target.value))}
                 >
                 {Array.from(Array(8)).map((x, i) => <option  value={i+2}>{i+2}</option>)}
                 </Form.Control>
-                <Form.Label>Attempts</Form.Label>
+                <Form.Label className={styles.label}>Attempts</Form.Label>
                 <Form.Control as="select"
-                // autoFocus
+                autoFocus
                 className={styles.option}
                 onChange={(e) => setAttempts(Number(e.target.value))}
                 >
-                {Array.from(Array(8)).map((x, i) => <option  value={i+2}>{i+2}</option>)}
+                {Array.from(Array(9)).map((x, i) => <option  value={i+1}>{i+1}</option>)}
                 </Form.Control>
               </Form>
-      <Button variant="primary"  size="lg" block className={styles.startButton} onClick={()=>{setNewGame(true)}}>
+
+      <Button variant="primary"  size="lg" block className={styles.startButton} onClick={()=>{setNewGame(!newGame)}}>
        Start
       </Button>
-   
-     </div> 
-   
+     </div>  
    : solved ? 
-    
    <>
         {/* {soundPlay(audioClips[1].sound)} */}
       <Alert  variant="success" className={styles.solved}>
-        <Alert.Heading>Congratulations!</Alert.Heading>
-        <p>
+        <Alert.Heading className = {styles.alertMessage}>Congratulations!</Alert.Heading>
+        <p className = {styles.alertMessage}>
          You have gussed all the numbers and won the game!!! 
          The number you guessed is {random}
         </p>
@@ -221,10 +233,13 @@ const Matermind = () => {
       </Alert>
     </>
    
-   : gameOver && hasStarted?  <Alert  variant="danger" className={styles.solved}>
-   <Alert.Heading>Sorry, you've lost!</Alert.Heading>
-   <p>
+   : gameOver && hasStarted?  
+   <Alert  variant="danger" className={styles.solved}>
+   <Alert.Heading className = {styles.alertMessage}>Sorry, you've lost!</Alert.Heading>
+   <p className = {styles.alertMessage}>
    Unfortunately you have exhausted all {attempts} guess attempts and none has matched the number!!!
+   </p>
+   <p className = {styles.alertMessage}>
    The number you were trying to guess was {random}
    </p>
    <hr />
@@ -243,7 +258,7 @@ const Matermind = () => {
 
        <div className={styles.box}>
         <form className={styles.numbersBox}>
-            {Array.from(Array(playNumbers)).map((x, i) => <button  id ={i} key={i} onClick = {handleClick} className={styles.number} >{i}</button>)}
+            {Array.from(Array(playNumbers)).map((x, i) => <button  id ={i+1} key={i+1} onClick = {handleClick} className={styles.number} >{i+1}</button>)}
         </form>
      
        
@@ -264,10 +279,8 @@ const Matermind = () => {
                {num}
              </button>)} 
           </div>
-          
           {messages[i] === "" ? <div></ div> :   <div className={styles.message}>{messages[i]}</ div> }  
          </div>)}
-
      </div>
      <div className={styles.timer}>Time Remaining: {secondsLeft}</div>
 
@@ -279,6 +292,7 @@ const Matermind = () => {
           Clear Numbers
       </Button>
      </div>
+     <FontAwesomeIcon icon={faChevronCircleLeft} className={styles.exit} onClick={() => setHasStarted(false)}/> 
     </div> }
     </div>)
 }
