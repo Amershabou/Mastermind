@@ -12,7 +12,7 @@ const Solved = ({handleReturnToMain, random}) => (
     <Alert  variant="success" className={styles.solved}>
     <Alert.Heading className = {styles.alertMessage}>Congratulations!</Alert.Heading>
     <p className = {styles.alertMessage}>
-    You have gussed all the numbers and won the game!!! 
+    You have guessed all the numbers and won the game!!! 
     The number you guessed is {random}
     </p>
     <hr />
