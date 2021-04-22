@@ -28,12 +28,13 @@ const Matermind = () => {
     const [responseHistory, setResponseHistory] = useState([]);
     const [messages, setMessages] = useState([]);
     const [gusses, setGuesses] = useState(attempts);
-    const [count, setCount] = useState(1);
+    const [count, setCount] = useState(0);
     const [hasStarted, setHasStarted] = useState(false);
     const [solved, setSolved] = useState(false);
     const [gameOver, setGameOver] = useState(false);
     const [clicked, setClicked] = useState(0)
     const [secondsLeft, setSecondsLeft] = useState(combination * 2);
+    const [idx, setIdx] = useState(0);
 
 
     let newNumberArray = Array(combination).fill("");
@@ -52,13 +53,14 @@ const Matermind = () => {
         setResponse(res.current);
         setResponseHistory(Array(1).fill(res.current));
         setGuesses(attempts);
-        setCount(1);
+        setCount(0);
         setNewGame(true);
         setHasStarted(true);
         setSolved(false);
         setMessages([]);
         setGameOver(false);
         setSecondsLeft(combination * 2);
+        setIdx(0);
       } else {
         isMounted.current = true;
       }
@@ -79,15 +81,16 @@ const Matermind = () => {
 
 
     const handleGuess = () => {
-      let newReponsehistory = responseHistory;
-      newReponsehistory[count - 1] = res.current;
+      setIdx(0);
       setGuesses(gusses - 1)
       if (gusses === 1) {
-        setTimeout(() => setGameOver(true), 100)
-      } else if (response[response[response.length - 1]] !== "" || secondsLeft === 0) {
-        newReponsehistory.push(newNumberArray)
-      }
+        return setGameOver(true)
+      } 
+      let newReponsehistory = responseHistory;
+      newReponsehistory[count] = res.current;
+      newReponsehistory.push(newNumberArray)
       setResponseHistory(newReponsehistory);
+
       setCount(count + 1);
       let newMessage = "";
       if (secondsLeft === 0) {
@@ -106,7 +109,7 @@ const Matermind = () => {
       }
       setMessages(messages => [...messages, newMessage])
       res.current = newNumberArray;
-      setResponse(newNumberArray);
+      setResponse(res.current);
       setSecondsLeft(combination * 2);
     }
 
@@ -117,31 +120,24 @@ const Matermind = () => {
       if (res.current[res.current.length - 1] !== "") {
         return;
       }
-      for (let i = 0; i < res.current.length; i++) {
-        if (typeof res.current[i] !== "number") {
-          res.current[i] = Number(id);
-          setResponse(res.current)
-          let newReponsehistory = responseHistory;
-          newReponsehistory[count - 1] = res.current;
-          break;
-        }
-      }
+      res.current[idx] = Number(id);
+      setResponse(res.current)
+      let newReponsehistory = responseHistory;
+      newReponsehistory[count] = res.current;
+      setIdx(idx + 1);
     }
 
     const checkIfMatch = (e) => {
       e.preventDefault();
-      if (res.current.includes("")) {
-        res.current = newNumberArray;
-        setResponse(newNumberArray);
-        return;
-      }
+      if (res.current[idx] === "") return;
       handleGuess();
     }
 
     const clearNumbers = () => {
+      setIdx(0);
       res.current = newNumberArray;
-      setResponse(newNumberArray);
-      responseHistory[responseHistory.length - 1] = newNumberArray;
+      setResponse(res.current);
+      responseHistory[count] = newNumberArray;
     }
 
     const handleReturnToMain = () => {
@@ -149,7 +145,6 @@ const Matermind = () => {
       setCombination(2);
       SetPlayNumbers(2);
       setAttempts(1);
-      setSecondsLeft(combination * 2);
     }
 
     return (
