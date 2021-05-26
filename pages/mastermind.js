@@ -18,7 +18,7 @@ import GameOver from "../src/GameOver";
 import Game from "../src/Game";
 import styles from "./styles.module.css"
 
-const Matermind = () => {
+const Mastermind = () => {
     const [combination, setCombination] = useState(2);
     const [playNumbers, SetPlayNumbers] = useState(2);
     const [attempts, setAttempts] = useState(1);
@@ -160,4 +160,4 @@ const Matermind = () => {
      </div>
     )}
 
-export default withRouter(Matermind);
+export default withRouter(Mastermind);
